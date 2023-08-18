@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 from pro_filer.actions.main_actions import show_details  # NOQA
 
 
@@ -14,7 +15,7 @@ def test_show_details_extension(capsys, tmp_path):
 
     expect_output = (
         "File name: Trybe_logo.png\n"
-        "File size in bytes: 0\n"
+        f"File size in bytes: {os.path.getsize(temp_file)}\n"
         "File type: file\n"
         "File extension: .png\n"
         f"Last modified date: {datetime.now().strftime('%Y-%m-%d')}\n"
@@ -31,8 +32,8 @@ def test_show_details_no_extension(capsys, tmp_path):
 
     expect_output = (
         "File name: Trybe_test\n"
-        "File size in bytes: 4096\n"
-        "File type: directory\n"  # Você esqueceu de fornecer o tipo do arquivo
+        f"File size in bytes: {os.path.getsize(temp_dir)}\n"
+        "File type: directory\n"
         "File extension: [no extension]\n"
         f"Last modified date: {datetime.now().strftime('%Y-%m-%d')}\n"
     )
