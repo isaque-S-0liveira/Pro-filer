@@ -7,7 +7,7 @@ def create_temp_file(path):
         pass
 
 
-def test_show_details(capsys, tmp_path):
+def test_show_details_extension(capsys, tmp_path):
     temp_file = tmp_path / "Trybe_logo.png"
     create_temp_file(temp_file)
     context = {"base_path": str(temp_file)}
@@ -19,6 +19,31 @@ def test_show_details(capsys, tmp_path):
         "File extension: .png\n"
         f"Last modified date: {datetime.now().strftime('%Y-%m-%d')}\n"
     )
+    show_details(context)
+    captured = capsys.readouterr()
+    assert captured.out == expect_output
+
+
+def test_show_details_no_extension(capsys, tmp_path):
+    temp_dir = tmp_path / "Trybe_test"
+    temp_dir.mkdir()  # Cria o diretório temporário
+    context = {"base_path": str(temp_dir)}
+
+    expect_output = (
+        "File name: Trybe_test\n"
+        "File size in bytes: 4096\n"
+        "File type: directory\n"  # Você esqueceu de fornecer o tipo do arquivo
+        "File extension: [no extension]\n"
+        f"Last modified date: {datetime.now().strftime('%Y-%m-%d')}\n"
+    )
+    show_details(context)
+    captured = capsys.readouterr()
+    assert captured.out == expect_output
+
+
+def test_show_details_file_not_exist(capsys):
+    context = {"base_path": "path_invalido"}
+    expect_output = "File 'path_invalido' does not exist\n"
     show_details(context)
     captured = capsys.readouterr()
     assert captured.out == expect_output
