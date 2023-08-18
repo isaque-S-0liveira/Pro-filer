@@ -1,24 +1,13 @@
 from pro_filer.actions.main_actions import show_disk_usage  # NOQA
 
 
-def create_temp_file1(path):
-    with open(path, "w", encoding="utf-8") as file:
-        file.write(":)")
-
-
-def create_temp_file2(path):
-    with open(path, "w", encoding="utf-8") as file:
-        file.write("<:)")
-
-
 def test_show_disk_usage(capsys, tmp_path):
     tmp_file_1 = tmp_path / "file_1"
     tmp_file_2 = tmp_path / "file_2"
 
-    create_temp_file1(tmp_file_1)
-    create_temp_file2(tmp_file_2)
+    tmp_file_1.write_text(":)")
+    tmp_file_2.write_text("<:)")
 
-    # Crie os caminhos absolutos completos
     abs_tmp_file_1 = str(tmp_file_1)
     abs_tmp_file_2 = str(tmp_file_2)
 
